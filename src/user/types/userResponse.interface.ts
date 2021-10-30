@@ -1,5 +1,5 @@
-import { UserEntity } from '../user.entity';
+import { UserType } from './user.type';
 
 export class UserResponseInteface {
-  user: Omit<UserEntity, 'hashPassword'> & { token: string };
+  user: UserType & { token: string };
 }

@@ -7,11 +7,15 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { User } from './decorators/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { AuthGuard } from './guards/auth.guard';
 import { UserResponseInteface } from './types/userResponse.interface';
 import { UserService } from './user.service';
 
@@ -20,6 +24,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<UserResponseInteface> {
@@ -28,6 +33,7 @@ export class UserController {
   }
 
   @Get(':userId')
+  @UseGuards(AuthGuard)
   async getUserById(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<UserResponseInteface> {
@@ -36,6 +42,7 @@ export class UserController {
   }
 
   @Post('login')
+  @UsePipes(new ValidationPipe())
   async loginUser(
     @Body() loginUserDto: CreateUserDto,
   ): Promise<UserResponseInteface> {
@@ -43,7 +50,9 @@ export class UserController {
     return this.userService.buildResponse(user);
   }
 
-  @Put()
+  @Put(':userId')
+  @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
   async updateUser(
     @User('id') userId: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -52,7 +61,8 @@ export class UserController {
     return this.userService.buildResponse(user);
   }
 
-  @Delete()
+  @Delete(':userId')
+  @UseGuards(AuthGuard)
   async deleteUser(@User('id') userId: number): Promise<DeleteResult> {
     return await this.userService.deleteUser(userId);
   }

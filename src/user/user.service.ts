@@ -81,7 +81,7 @@ export class UserService {
       { select: ['id', 'email', 'password'] },
     );
 
-    user.password = hash(updateUserDto.password, 10);
+    user.password = await hash(updateUserDto.password, 10);
     return await this.userRepository.save(user);
   }
 
