@@ -1,6 +1,8 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { AuthGuard } from 'src/user/guards/auth.guard';
+import { CreateScreenDto } from './dto/create-screen.dto';
+import { UpdateScreenDto } from './dto/update-screen.dto';
 import { UserIsOwnerScreenGuard } from './guards/userIsOwnerScreen.guard';
 import { ScreenEntity } from './screen.entity';
 import { ScreenService } from './screen.service';
@@ -9,13 +11,27 @@ import { ScreenService } from './screen.service';
   model: {
     type: ScreenEntity,
   },
+
+  dto: {
+    create: CreateScreenDto,
+    replace: UpdateScreenDto,
+  },
+
   params: {
+    userId: {
+      field: 'userId',
+      type: 'number',
+    },
+    eventId: {
+      field: 'eventId',
+      type: 'number',
+    },
     screenId: {
       field: 'screenId',
       type: 'number',
-      primary: true,
     },
   },
+
   routes: {
     exclude: ['createManyBase', 'recoverOneBase', 'updateOneBase'],
     createOneBase: {
@@ -29,7 +45,7 @@ import { ScreenService } from './screen.service';
     },
   },
 })
-@Controller('users/:userId/events/eventId/screens')
+@Controller('users/:userId/events/:eventId/screens')
 export class ScreenController implements CrudController<ScreenEntity> {
   constructor(public service: ScreenService) {}
 }

@@ -3,25 +3,30 @@ import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({ name: 'events' })
-export class EventEntity {
+@Entity({ name: 'playlists' })
+export class PlaylistEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  playlist_name: string;
 
   @Column()
   userId: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.events)
+  @Column()
+  screenId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.playlists)
   user: UserEntity;
 
-  @OneToMany(() => ScreenEntity, (screen) => screen.event)
-  screens: ScreenEntity[];
+  @OneToOne(() => ScreenEntity, (screen) => screen.playlist)
+  @JoinColumn()
+  screen: ScreenEntity;
 }
