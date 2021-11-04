@@ -1,9 +1,11 @@
+import { ContentEntity } from 'src/content/content.entity';
 import { ScreenEntity } from 'src/screen/screen.entity';
 import { UserEntity } from 'src/user/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -29,4 +31,7 @@ export class PlaylistEntity {
   @OneToOne(() => ScreenEntity, (screen) => screen.playlist)
   @JoinColumn()
   screen: ScreenEntity;
+
+  @ManyToMany(() => ContentEntity, (content) => content.playlists)
+  contents: ContentEntity[];
 }

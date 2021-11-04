@@ -3,9 +3,10 @@ import { PlaylistService } from './playlist.service';
 import { PlaylistController } from './playlist.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlaylistEntity } from './playlist.entity';
+import { ContentModule } from 'src/content/content.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlaylistEntity])],
+  imports: [TypeOrmModule.forFeature([PlaylistEntity]), ContentModule],
   exports: [PlaylistService],
   providers: [PlaylistService],
   controllers: [PlaylistController],
