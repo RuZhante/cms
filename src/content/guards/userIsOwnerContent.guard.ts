@@ -5,23 +5,20 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { EventService } from '../event.service';
+import { ContentService } from '../content.service';
 
 @Injectable()
-export class UserIsOwnerEventGuard implements CanActivate {
-  constructor(private readonly eventService: EventService) {}
+export class UserIsOwnerContentGuard implements CanActivate {
+  constructor(private readonly contentService: ContentService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-
-    console.log(request);
-
-    const eventId = request.params.id;
+    const contentId = request.params.id;
     const currentUserId = request.user.id;
 
-    const currentEvent = await this.eventService.findOne(eventId);
+    const currentContent = await this.contentService.findOne(contentId);
 
-    if (currentUserId === currentEvent.userId) return true;
+    if (currentUserId === currentContent.userId) return true;
 
     throw new HttpException('Forbidden resource!', HttpStatus.FORBIDDEN);
   }

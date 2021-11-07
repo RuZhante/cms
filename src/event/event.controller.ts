@@ -5,6 +5,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './event.entity';
 import { EventService } from './event.service';
+import { UserCreateEventGuard } from './guards/userCreateEvent.guard';
 import { UserIsOwnerEventGuard } from './guards/userIsOwnerEvent.guard';
 
 @Crud({
@@ -31,7 +32,7 @@ import { UserIsOwnerEventGuard } from './guards/userIsOwnerEvent.guard';
   routes: {
     exclude: ['createManyBase', 'recoverOneBase', 'updateOneBase'],
     createOneBase: {
-      decorators: [UseGuards(AuthGuard)],
+      decorators: [UseGuards(AuthGuard, UserCreateEventGuard)],
     },
     replaceOneBase: {
       decorators: [UseGuards(AuthGuard, UserIsOwnerEventGuard)],
