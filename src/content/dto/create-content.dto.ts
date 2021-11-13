@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateContentDto {
   @ApiProperty()
@@ -10,5 +10,9 @@ export class CreateContentDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly tail: string;
+  readonly extension: string;
+
+  @ApiProperty()
+  @IsNumber()
+  readonly duration: number;
 }

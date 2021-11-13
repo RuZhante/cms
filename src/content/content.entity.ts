@@ -18,7 +18,10 @@ export class ContentEntity {
   name: string;
 
   @Column()
-  tail: string;
+  extension: string;
+
+  @Column({ nullable: true })
+  duration: number;
 
   @Column()
   userId: number;
