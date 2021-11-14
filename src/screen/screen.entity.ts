@@ -15,7 +15,7 @@ export class ScreenEntity {
   id: number;
 
   @Column()
-  screen_name: string;
+  screenName: string;
 
   @Column()
   userId: number;

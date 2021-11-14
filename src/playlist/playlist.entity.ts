@@ -17,7 +17,7 @@ export class PlaylistEntity {
   id: number;
 
   @Column()
-  playlist_name: string;
+  playlistName: string;
 
   @Column()
   userId: number;
