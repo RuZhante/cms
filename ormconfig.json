@@ -1,0 +1,16 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "cms",
+  "password": "123",
+  "database": "cms",
+  "entities": ["src/**/*.entity.ts"],
+  "synchronize": false,
+  "migrations": ["src/migration/**/*.ts"],
+  "seeds": ["src/database/seeds/**/*.seed.ts"],
+  "factories": ["src/database/factories/**/*.factory.ts"],
+  "cli": {
+    "migrationsDir": "src/migration"
+  }
+}
