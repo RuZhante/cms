@@ -2,7 +2,6 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
-import { AuthGuard } from 'src/user/guards/auth.guard';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 import { UserCreateEventScreenPlaylistGuard } from './guards/userCreate-Event-Screen-Playlist.guard';
@@ -44,7 +43,6 @@ import { PlaylistService } from './playlist.service';
     createOneBase: {
       decorators: [
         UseGuards(
-          AuthGuard,
           UserCreateEventGuard,
           UserCreateEventScreenGuard,
           UserCreateEventScreenPlaylistGuard,
@@ -52,10 +50,10 @@ import { PlaylistService } from './playlist.service';
       ],
     },
     replaceOneBase: {
-      decorators: [UseGuards(AuthGuard, UserIsOwnerPlaylistGuard)],
+      decorators: [UseGuards(UserIsOwnerPlaylistGuard)],
     },
     deleteOneBase: {
-      decorators: [UseGuards(AuthGuard, UserIsOwnerPlaylistGuard)],
+      decorators: [UseGuards(UserIsOwnerPlaylistGuard)],
     },
   },
 })

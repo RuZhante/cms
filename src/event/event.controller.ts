@@ -1,6 +1,5 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
-import { AuthGuard } from 'src/user/guards/auth.guard';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './event.entity';
@@ -32,13 +31,13 @@ import { UserIsOwnerEventGuard } from './guards/userIsOwnerEvent.guard';
   routes: {
     exclude: ['createManyBase', 'recoverOneBase', 'updateOneBase'],
     createOneBase: {
-      decorators: [UseGuards(AuthGuard, UserCreateEventGuard)],
+      decorators: [UseGuards(UserCreateEventGuard)],
     },
     replaceOneBase: {
-      decorators: [UseGuards(AuthGuard, UserIsOwnerEventGuard)],
+      decorators: [UseGuards(UserIsOwnerEventGuard)],
     },
     deleteOneBase: {
-      decorators: [UseGuards(AuthGuard, UserIsOwnerEventGuard)],
+      decorators: [UseGuards(UserIsOwnerEventGuard)],
     },
   },
 })

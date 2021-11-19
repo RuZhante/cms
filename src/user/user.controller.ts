@@ -1,4 +1,5 @@
 import {
+  Request,
   Body,
   Controller,
   Delete,
@@ -12,18 +13,23 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { User } from './decorators/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
-import { AuthGuard } from './guards/auth.guard';
 import { UserResponseInteface } from './types/userResponse.interface';
 import { UserService } from './user.service';
 
 @ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
@@ -34,8 +40,8 @@ export class UserController {
     return this.userService.buildResponse(newUser);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':userId')
-  @UseGuards(AuthGuard)
   async getUserById(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<UserResponseInteface> {
@@ -43,17 +49,13 @@ export class UserController {
     return this.userService.buildResponse(user);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  @UsePipes(new ValidationPipe())
-  async loginUser(
-    @Body() loginUserDto: CreateUserDto,
-  ): Promise<UserResponseInteface> {
-    const user = await this.userService.loginUser(loginUserDto);
-    return this.userService.buildResponse(user);
+  async login(@Request() req) {
+    return this.authService.login(req.user);
   }
 
   @Put(':userId')
-  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async updateUser(
     @User('id') userId: number,
@@ -64,7 +66,6 @@ export class UserController {
   }
 
   @Delete(':userId')
-  @UseGuards(AuthGuard)
   async deleteUser(@User('id') userId: number): Promise<DeleteResult> {
     return await this.userService.deleteUser(userId);
   }

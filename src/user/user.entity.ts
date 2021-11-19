@@ -23,7 +23,7 @@ export class UserEntity {
   email: string;
 
   @ApiProperty()
-  @Column({ select: false })
+  @Column()
   password: string;
 
   @BeforeInsert()
