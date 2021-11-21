@@ -10,7 +10,7 @@ export class UpdateContentDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly tail: string;
+  readonly extension: string;
 
   @ApiProperty()
   @IsNumber()

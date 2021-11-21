@@ -12,10 +12,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { AuthService } from 'src/auth/auth.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { DeleteResult } from 'typeorm';
 import { User } from './decorators/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -26,10 +24,7 @@ import { UserService } from './user.service';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
@@ -40,6 +35,7 @@ export class UserController {
     return this.userService.buildResponse(newUser);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get(':userId')
   async getUserById(
@@ -49,12 +45,8 @@ export class UserController {
     return this.userService.buildResponse(user);
   }
 
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
-  }
-
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Put(':userId')
   @UsePipes(new ValidationPipe())
   async updateUser(
@@ -65,6 +57,8 @@ export class UserController {
     return this.userService.buildResponse(user);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':userId')
   async deleteUser(@User('id') userId: number): Promise<DeleteResult> {
     return await this.userService.deleteUser(userId);
