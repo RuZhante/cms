@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     TypeOrmModule.forRoot(ormconfig),
     AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}
