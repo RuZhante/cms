@@ -7,6 +7,7 @@ import { UpdateScreenDto } from './dto/update-screen.dto';
 import { UserIsOwnerScreenGuard } from './guards/userIsOwnerScreen.guard';
 import { ScreenEntity } from './screen.entity';
 import { ScreenService } from './screen.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Crud({
   model: {
@@ -46,6 +47,8 @@ import { ScreenService } from './screen.service';
     },
   },
 })
+@ApiTags('screens')
+@ApiBearerAuth()
 @Controller('users/:userId/events/:eventId/screens')
 export class ScreenController implements CrudController<ScreenEntity> {
   constructor(public service: ScreenService) {}

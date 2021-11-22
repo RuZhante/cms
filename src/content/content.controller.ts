@@ -1,4 +1,5 @@
 import { Controller, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenPlaylistGuard } from 'src/playlist/guards/userCreate-Event-Screen-Playlist.guard';
@@ -63,6 +64,8 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
     },
   },
 })
+@ApiTags('contents')
+@ApiBearerAuth()
 @Controller(
   'users/:userId/events/:eventId/screens/:screenId/playlists/:playlistId/contents',
 )

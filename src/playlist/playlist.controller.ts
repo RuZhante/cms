@@ -1,4 +1,5 @@
 import { Controller, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
@@ -57,6 +58,8 @@ import { PlaylistService } from './playlist.service';
     },
   },
 })
+@ApiTags('playlists')
+@ApiBearerAuth()
 @Controller('users/:userId/events/:eventId/screens/:screenId/playlists')
 export class PlaylistController implements CrudController<PlaylistEntity> {
   constructor(public service: PlaylistService) {}
