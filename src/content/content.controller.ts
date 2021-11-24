@@ -1,6 +1,7 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenPlaylistGuard } from 'src/playlist/guards/userCreate-Event-Screen-Playlist.guard';
 import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
@@ -66,6 +67,7 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
 })
 @ApiTags('contents')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller(
   'users/:userId/events/:eventId/screens/:screenId/playlists/:playlistId/contents',
 )

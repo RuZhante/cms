@@ -8,6 +8,7 @@ import { UserIsOwnerScreenGuard } from './guards/userIsOwnerScreen.guard';
 import { ScreenEntity } from './screen.entity';
 import { ScreenService } from './screen.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Crud({
   model: {
@@ -49,6 +50,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 })
 @ApiTags('screens')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('users/:userId/events/:eventId/screens')
 export class ScreenController implements CrudController<ScreenEntity> {
   constructor(public service: ScreenService) {}
