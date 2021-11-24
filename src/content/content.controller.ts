@@ -2,9 +2,6 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
-import { UserCreateEventScreenPlaylistGuard } from 'src/playlist/guards/userCreate-Event-Screen-Playlist.guard';
-import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
 import { ContentEntity } from './content.entity';
 import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
@@ -27,35 +24,12 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
       field: 'userId',
       type: 'number',
     },
-    eventId: {
-      field: 'eventId',
-      type: 'number',
-    },
-    screenId: {
-      field: 'screenId',
-      type: 'number',
-    },
-    playlistId: {
-      field: 'playlistId',
-      type: 'number',
-    },
-    contentId: {
-      field: 'contentId',
-      type: 'number',
-    },
   },
 
   routes: {
     exclude: ['createManyBase', 'recoverOneBase', 'updateOneBase'],
     createOneBase: {
-      decorators: [
-        UseGuards(
-          UserCreateEventGuard,
-          UserCreateEventScreenGuard,
-          UserCreateEventScreenPlaylistGuard,
-          UserCreateEventScreenPlaylistContentGuard,
-        ),
-      ],
+      decorators: [UseGuards(UserCreateEventScreenPlaylistContentGuard)],
     },
     replaceOneBase: {
       decorators: [UseGuards(UserIsOwnerContentGuard)],
@@ -68,9 +42,7 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
 @ApiTags('contents')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller(
-  'users/:userId/events/:eventId/screens/:screenId/playlists/:playlistId/contents',
-)
+@Controller('users/:userId/contents')
 export class ContentController implements CrudController<ContentEntity> {
   constructor(public service: ContentService) {}
 }

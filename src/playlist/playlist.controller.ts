@@ -34,10 +34,6 @@ import { PlaylistService } from './playlist.service';
       field: 'screenId',
       type: 'number',
     },
-    playlistId: {
-      field: 'playlistId',
-      type: 'number',
-    },
   },
 
   routes: {

@@ -29,10 +29,6 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
       field: 'eventId',
       type: 'number',
     },
-    screenId: {
-      field: 'screenId',
-      type: 'number',
-    },
   },
 
   routes: {

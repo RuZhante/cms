@@ -16,22 +16,13 @@ export class UserCreateEventScreenPlaylistContentGuard implements CanActivate {
 
     console.log(request);
 
-    const paramsScreenId = Number(request.params.screenId);
-    const paramsPlaylistId = request.params.playlistId;
-    const userPlaylist = await this.playlistService.findOne(paramsPlaylistId);
+    const userInParamsId = Number(request.params.userId);
+    const currentUserId = request.user.id;
 
-    if (!userPlaylist)
-      throw new HttpException(
-        'Playlist does not exist!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-
-    // console.log(userPlaylist);
-
-    if (paramsScreenId === userPlaylist.screenId) return true;
+    if (userInParamsId === currentUserId) return true;
 
     throw new HttpException(
-      'The playlist does not belong to the current screen',
+      'Current User is not equal with User in params',
       HttpStatus.UNPROCESSABLE_ENTITY,
     );
   }

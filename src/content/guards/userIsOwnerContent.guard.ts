@@ -13,6 +13,7 @@ export class UserIsOwnerContentGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
+
     const contentId = request.params.id;
     const currentUserId = request.user.id;
 

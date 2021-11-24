@@ -24,10 +24,6 @@ import { UserIsOwnerEventGuard } from './guards/userIsOwnerEvent.guard';
       field: 'userId',
       type: 'number',
     },
-    eventId: {
-      field: 'eventId',
-      type: 'number',
-    },
   },
 
   routes: {
