@@ -16,7 +16,7 @@ export class UserCreateEventScreenPlaylistGuard implements CanActivate {
 
     // console.log(request);
 
-    const paramsEventId = Number(request.params.eventId);
+    // const paramsEventId = Number(request.params.eventId);
     const paramsScreenId = request.params.screenId;
     const userScreen = await this.screenService.findOne(paramsScreenId);
 
@@ -26,11 +26,6 @@ export class UserCreateEventScreenPlaylistGuard implements CanActivate {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
 
-    if (paramsEventId === userScreen.eventId) return true;
-
-    throw new HttpException(
-      'Event in params does not have this Screen',
-      HttpStatus.UNPROCESSABLE_ENTITY,
-    );
+    return true;
   }
 }

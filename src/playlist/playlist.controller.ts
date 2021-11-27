@@ -26,10 +26,6 @@ import { PlaylistService } from './playlist.service';
       field: 'userId',
       type: 'number',
     },
-    eventId: {
-      field: 'eventId',
-      type: 'number',
-    },
     screenId: {
       field: 'screenId',
       type: 'number',
@@ -54,11 +50,19 @@ import { PlaylistService } from './playlist.service';
       decorators: [UseGuards(UserIsOwnerPlaylistGuard)],
     },
   },
+
+  query: {
+    join: {
+      contents: {
+        eager: true,
+      },
+    },
+  },
 })
 @ApiTags('playlists')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('users/:userId/events/:eventId/screens/:screenId/playlists')
+@Controller('users/:userId/screens/:screenId/playlists')
 export class PlaylistController implements CrudController<PlaylistEntity> {
   constructor(public service: PlaylistService) {}
 }

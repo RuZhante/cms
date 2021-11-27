@@ -32,6 +32,8 @@ export class PlaylistEntity {
   @JoinColumn()
   screen: ScreenEntity;
 
-  @ManyToMany(() => ContentEntity, (content) => content.playlists)
+  @ManyToMany(() => ContentEntity, (content) => content.playlists, {
+    eager: true,
+  })
   contents: ContentEntity[];
 }
