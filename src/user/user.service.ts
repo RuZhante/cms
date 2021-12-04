@@ -15,16 +15,16 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const userByEmail = await this.userRepository.findOne({
-      email: createUserDto.email,
-    });
+    // const userByEmail = await this.userRepository.findOne({
+    //   email: createUserDto.email,
+    // });
 
-    if (userByEmail) {
-      throw new HttpException(
-        'Email are taken!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
+    // if (userByEmail) {
+    //   throw new HttpException(
+    //     'Email are taken!',
+    //     HttpStatus.UNPROCESSABLE_ENTITY,
+    //   );
+    // }
 
     const newUser = new UserEntity();
     Object.assign(newUser, createUserDto);
@@ -35,16 +35,16 @@ export class UserService {
     userId: number,
     updateUserDto: UpdateUserDto,
   ): Promise<UserEntity> {
-    const userByEmail = await this.userRepository.findOne({
-      email: updateUserDto.email,
-    });
+    // const userByEmail = await this.userRepository.findOne({
+    //   email: updateUserDto.email,
+    // });
 
-    if (!userByEmail) {
-      throw new HttpException(
-        'Email does not exist!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
+    // if (!userByEmail) {
+    //   throw new HttpException(
+    //     'Email does not exist!',
+    //     HttpStatus.UNPROCESSABLE_ENTITY,
+    //   );
+    // }
 
     const user = await this.userRepository.findOne(
       { id: userId },
