@@ -1,26 +1,51 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
-import { jwtConstants } from './constants';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { getRepository } from 'typeorm';
 import { UserEntity } from 'src/user/user.entity';
+import { passportJwtSecret } from 'jwks-rsa';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
+      secretOrKeyProvider: passportJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+      }),
+
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: jwtConstants.secret,
+      audience: process.env.AUTH0_AUDIENCE,
+      issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+      algorithms: ['RS256'],
     });
   }
 
-  async validate(payload: any) {
-    const userRepo = getRepository(UserEntity);
-    const foundUser = userRepo.findOneOrFail({
-      id: payload.sub,
-      email: payload.email,
-    });
-    return foundUser;
+  // async validate(payload: any) {
+  //   const userRepo = getRepository(UserEntity);
+  //   const foundUser = userRepo.findOneOrFail({
+  //     id: payload.sub,
+  //     email: payload.email,
+  //   });
+  //   return foundUser;
+  // }
+
+  validate(payload: any) {
+    const minimumScope = ['openid', 'profile', 'email'];
+
+    if (
+      payload?.scope
+        ?.split(' ')
+        .filter((scope) => minimumScope.indexOf(scope) > -1).length !== 3
+    ) {
+      throw new UnauthorizedException(
+        'JWT does not possess the required scope (`openid profile email`).',
+      );
+    }
+
+    return payload;
   }
 }
