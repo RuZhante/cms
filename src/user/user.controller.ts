@@ -1,5 +1,4 @@
 import {
-  Request,
   Body,
   Controller,
   Delete,
@@ -15,7 +14,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { DeleteResult } from 'typeorm';
-import { User } from './decorators/user.decorator';
+import { User } from '../common/decorators/user.decorator';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserResponseInteface } from './types/userResponse.interface';
