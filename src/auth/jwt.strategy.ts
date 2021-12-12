@@ -1,10 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { getRepository } from 'typeorm';
-import { UserEntity } from 'src/user/user.entity';
 import { passportJwtSecret } from 'jwks-rsa';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,12 +11,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+        jwksUri: `https://${process.env.AUTH0_ISSUER_URL}/.well-known/jwks.json`,
       }),
 
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       audience: process.env.AUTH0_AUDIENCE,
-      issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+      issuer: `https://${process.env.AUTH0_ISSUER_URL}/`,
       algorithms: ['RS256'],
     });
   }
