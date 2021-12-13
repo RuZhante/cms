@@ -12,6 +12,9 @@ import { AppController } from './app.controller';
       envFilePath: './.env',
     }),
     TypeOrmModule.forRoot(ormconfig),
+    // TypeOrmModule.forRoot({
+
+    // }),
     AuthModule,
     UserModule,
   ],

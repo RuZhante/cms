@@ -2,6 +2,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { passportJwtSecret } from 'jwks-rsa';
+import { getRepository } from 'typeorm';
+import { UserEntity } from 'src/user/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -30,7 +32,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   //   return foundUser;
   // }
 
-  validate(payload: any) {
+  async validate(payload: any) {
+    const userRepo = getRepository(UserEntity);
+    const foundUser = await userRepo.findOne();
+
     const minimumScope = ['openid', 'profile', 'email'];
 
     if (
@@ -42,6 +47,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         'JWT does not possess the required scope (`openid profile email`).',
       );
     }
+
+    console.log(payload);
 
     return payload;
   }

@@ -11,9 +11,12 @@ import { UserEntity } from '../user.entity';
 export class IsEmailAlreadyExistConstraint
   implements ValidatorConstraintInterface
 {
-  validate(email: any) {
+  async validate(email: any) {
     const userRepo = getRepository(UserEntity);
-    const foundUser = userRepo.findOneOrFail({ email: email });
+    const foundUser = await userRepo.findOne({ email: email });
+    // console.log(email);
+    // console.log(foundUser);
+
     if (foundUser) return false;
     return true;
   }

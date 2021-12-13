@@ -1,6 +1,11 @@
 version: '3.0'
 
 services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
   postgres:
     container_name: postgres
     image: postgres:14
@@ -9,7 +14,7 @@ services:
     environment:
       PG_DATA: /var/lib/postgresql/data
     ports:
-      - 5433:5433
+      - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
