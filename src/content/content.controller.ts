@@ -1,9 +1,16 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Crud, CrudController, CrudRequestInterceptor } from '@nestjsx/crud';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ContentEntity } from './content.entity';
 import { ContentService } from './content.service';
+import { ContentParamsDto } from './dto/contentParams.dto';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { UserCreateEventScreenPlaylistContentGuard } from './guards/userCreate-Event-Screen-Playlist-Content.guard';
@@ -45,4 +52,16 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
 @Controller('users/:userId/contents')
 export class ContentController implements CrudController<ContentEntity> {
   constructor(public service: ContentService) {}
+
+  @UseInterceptors(CrudRequestInterceptor)
+  @Post('by-params')
+  async getContentWithParams(
+    @Body() contentParamsDto: ContentParamsDto,
+  ): Promise<ContentEntity[]> {
+    const contents = await this.service.getContentsWithParams(
+      contentParamsDto.orientation,
+      contentParamsDto.screenResolution,
+    );
+    return contents;
+  }
 }

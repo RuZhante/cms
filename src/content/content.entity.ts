@@ -26,6 +26,12 @@ export class ContentEntity {
   @Column()
   userId: number;
 
+  @Column({ nullable: true })
+  orientation: string;
+
+  @Column({ nullable: true })
+  screenResolution: string;
+
   @ManyToMany(() => PlaylistEntity, (playlist) => playlist.contents)
   @JoinTable()
   playlists: PlaylistEntity[];
