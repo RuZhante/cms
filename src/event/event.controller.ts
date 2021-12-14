@@ -22,7 +22,7 @@ import { UserIsOwnerEventGuard } from './guards/userIsOwnerEvent.guard';
   params: {
     userId: {
       field: 'userId',
-      type: 'number',
+      type: 'string',
     },
   },
 

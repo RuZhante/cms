@@ -23,7 +23,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
   params: {
     userId: {
       field: 'userId',
-      type: 'number',
+      type: 'string',
     },
     eventId: {
       field: 'eventId',

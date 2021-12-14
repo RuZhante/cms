@@ -25,41 +25,41 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  @UsePipes(new ValidationPipe())
-  async createUser(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<UserResponseInteface> {
-    const newUser = await this.userService.createUser(createUserDto);
-    return this.userService.buildResponse(newUser);
-  }
+  // @Post()
+  // @UsePipes(new ValidationPipe())
+  // async createUser(
+  //   @Body() createUserDto: CreateUserDto,
+  // ): Promise<UserResponseInteface> {
+  //   const newUser = await this.userService.createUser(createUserDto);
+  //   return this.userService.buildResponse(newUser);
+  // }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get(':userId')
   async getUserById(
-    @Param('userId', ParseIntPipe) userId: number,
+    @Param('userId') userId: string,
   ): Promise<UserResponseInteface> {
     const user = await this.userService.findById(userId);
     return this.userService.buildResponse(user);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Put(':userId')
-  @UsePipes(new ValidationPipe())
-  async updateUser(
-    @User('id') userId: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<UserResponseInteface> {
-    const user = await this.userService.updateUser(userId, updateUserDto);
-    return this.userService.buildResponse(user);
-  }
+  // @ApiBearerAuth()
+  // @UseGuards(JwtAuthGuard)
+  // @Put(':userId')
+  // @UsePipes(new ValidationPipe())
+  // async updateUser(
+  //   @User('id') userId: number,
+  //   @Body() updateUserDto: UpdateUserDto,
+  // ): Promise<UserResponseInteface> {
+  //   const user = await this.userService.updateUser(userId, updateUserDto);
+  //   return this.userService.buildResponse(user);
+  // }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Delete(':userId')
-  async deleteUser(@User('id') userId: number): Promise<DeleteResult> {
-    return await this.userService.deleteUser(userId);
-  }
+  // @ApiBearerAuth()
+  // @UseGuards(JwtAuthGuard)
+  // @Delete(':userId')
+  // async deleteUser(@User('id') userId: number): Promise<DeleteResult> {
+  //   return await this.userService.deleteUser(userId);
+  // }
 }

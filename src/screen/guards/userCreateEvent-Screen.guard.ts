@@ -17,7 +17,7 @@ export class UserCreateEventScreenGuard implements CanActivate {
     // console.log(request);
 
     const paramsEventId = request.params.eventId;
-    const paramsUserId = Number(request.params.userId);
+    const paramsUserId = request.params.userId;
     const userEvent = await this.eventService.findOne(paramsEventId);
 
     if (!userEvent)

@@ -22,7 +22,7 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
   params: {
     userId: {
       field: 'userId',
-      type: 'number',
+      type: 'string',
     },
   },
 

@@ -16,7 +16,7 @@ export class UserCreateEventScreenPlaylistContentGuard implements CanActivate {
 
     console.log(request);
 
-    const userInParamsId = Number(request.params.userId);
+    const userInParamsId = request.params.userId;
     const currentUserId = request.user.id;
 
     if (userInParamsId === currentUserId) return true;

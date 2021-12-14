@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   OneToMany,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { hash } from 'bcrypt';
@@ -15,21 +16,21 @@ import { ContentEntity } from 'src/content/content.entity';
 @Entity({ name: 'users' })
 export class UserEntity {
   @ApiProperty()
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('varchar')
+  id: string;
 
-  @ApiProperty()
-  @Column()
-  email: string;
+  // @ApiProperty()
+  // @Column({ nullable: true })
+  // email: string;
 
-  @ApiProperty()
-  @Column()
-  password: string;
+  // @ApiProperty({ nullable: true })
+  // @Column()
+  // password: string;
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await hash(this.password, 10);
-  }
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   this.password = await hash(this.password, 10);
+  // }
 
   @OneToMany(() => EventEntity, (event) => event.user)
   events: EventEntity[];

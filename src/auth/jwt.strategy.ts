@@ -34,7 +34,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any) {
     const userRepo = getRepository(UserEntity);
-    const foundUser = await userRepo.findOne();
+    const foundUser = await userRepo.findOne({ id: payload.sub });
+
+    if (!foundUser) {
+      const newUser = new UserEntity();
+      newUser.id = payload.sub;
+      return await userRepo.save(newUser);
+    }
 
     const minimumScope = ['openid', 'profile', 'email'];
 
@@ -48,8 +54,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       );
     }
 
-    console.log(payload);
+    // console.log(payload);
+    // console.log('-----------------');
+    console.log(foundUser);
 
-    return payload;
+    return foundUser;
   }
 }

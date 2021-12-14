@@ -24,7 +24,7 @@ import { PlaylistService } from './playlist.service';
   params: {
     userId: {
       field: 'userId',
-      type: 'number',
+      type: 'string',
     },
     screenId: {
       field: 'screenId',
