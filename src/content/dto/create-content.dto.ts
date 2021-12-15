@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
+import { Orientation } from '../common/orientation';
 
 export class CreateContentDto {
   @ApiProperty()
@@ -15,4 +16,14 @@ export class CreateContentDto {
   @ApiProperty()
   @IsNumber()
   readonly duration: number;
+
+  @ApiProperty()
+  orientation: Orientation;
+
+  // @ApiProperty()
+  // @IsUrl()
+  // url: string;
+
+  @IsString()
+  screenResolution: string;
 }
