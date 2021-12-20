@@ -1,8 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
+  ForbiddenException,
   Injectable,
 } from '@nestjs/common';
 import { PlaylistService } from '../playlist.service';
@@ -21,6 +20,6 @@ export class UserIsOwnerPlaylistGuard implements CanActivate {
 
     if (currentUserId === currentPlaylist.userId) return true;
 
-    throw new HttpException('Forbidden resource!', HttpStatus.FORBIDDEN);
+    throw new ForbiddenException('Forbidden resource!');
   }
 }

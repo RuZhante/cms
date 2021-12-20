@@ -23,15 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // async validate(payload: any) {
-  //   const userRepo = getRepository(UserEntity);
-  //   const foundUser = userRepo.findOneOrFail({
-  //     id: payload.sub,
-  //     email: payload.email,
-  //   });
-  //   return foundUser;
-  // }
-
   async validate(payload: any) {
     const userRepo = getRepository(UserEntity);
     const foundUser = await userRepo.findOne({ id: payload.sub });
@@ -54,8 +45,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       );
     }
 
-    // console.log(payload);
-    // console.log('-----------------');
     console.log(foundUser);
 
     return foundUser;

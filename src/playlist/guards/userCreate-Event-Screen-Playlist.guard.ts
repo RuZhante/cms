@@ -1,9 +1,8 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ScreenService } from 'src/screen/screen.service';
 
@@ -17,12 +16,9 @@ export class UserCreateEventScreenPlaylistGuard implements CanActivate {
     const paramsScreenId = request.params.screenId;
     const userScreen = await this.screenService.findOne(paramsScreenId);
 
-    if (!userScreen)
-      throw new HttpException(
-        'Screen does not exist!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-
+    if (!userScreen) {
+      throw new UnprocessableEntityException('Screen does not exist!');
+    }
     return true;
   }
 }

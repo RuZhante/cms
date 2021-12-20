@@ -13,6 +13,7 @@ import { EventService } from 'src/event/event.service';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
 import { UserCreateEventScreenPlaylistGuard } from 'src/playlist/guards/userCreate-Event-Screen-Playlist.guard';
+import { AwsService } from 'src/aws/aws.service';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserCreateEventScreenPlaylistGuard } from 'src/playlist/guards/userCrea
     UserCreateEventGuard,
     UserCreateEventScreenGuard,
     UserCreateEventScreenPlaylistGuard,
+    AwsService,
   ],
   exports: [ContentService],
   controllers: [ContentController],

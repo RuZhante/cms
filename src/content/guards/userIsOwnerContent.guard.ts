@@ -1,8 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
+  ForbiddenException,
   Injectable,
 } from '@nestjs/common';
 import { ContentService } from '../content.service';
@@ -21,6 +20,6 @@ export class UserIsOwnerContentGuard implements CanActivate {
 
     if (currentUserId === currentContent.userId) return true;
 
-    throw new HttpException('Forbidden resource!', HttpStatus.FORBIDDEN);
+    throw new ForbiddenException('Forbidden resource!');
   }
 }

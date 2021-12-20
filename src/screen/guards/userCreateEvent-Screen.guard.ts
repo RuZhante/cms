@@ -1,9 +1,8 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { EventService } from 'src/event/event.service';
 
@@ -19,16 +18,12 @@ export class UserCreateEventScreenGuard implements CanActivate {
     const userEvent = await this.eventService.findOne(paramsEventId);
 
     if (!userEvent)
-      throw new HttpException(
-        'Event does not exist!',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+      throw new UnprocessableEntityException('Event does not exist!');
 
     if (paramsUserId === userEvent.userId) return true;
 
-    throw new HttpException(
+    throw new UnprocessableEntityException(
       'User in params does not have Event in params',
-      HttpStatus.UNPROCESSABLE_ENTITY,
     );
   }
 }

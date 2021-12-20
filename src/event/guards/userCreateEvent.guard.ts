@@ -1,9 +1,8 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 
 @Injectable()
@@ -16,9 +15,8 @@ export class UserCreateEventGuard implements CanActivate {
 
     if (userInParamsId === currentUserId) return true;
 
-    throw new HttpException(
+    throw new UnprocessableEntityException(
       'Current User is not equal with User in params',
-      HttpStatus.UNPROCESSABLE_ENTITY,
     );
   }
 }

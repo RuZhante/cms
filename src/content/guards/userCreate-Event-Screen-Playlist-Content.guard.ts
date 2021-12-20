@@ -1,9 +1,8 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { PlaylistService } from 'src/playlist/playlist.service';
 
@@ -21,9 +20,8 @@ export class UserCreateEventScreenPlaylistContentGuard implements CanActivate {
 
     if (userInParamsId === currentUserId) return true;
 
-    throw new HttpException(
+    throw new UnprocessableEntityException(
       'Current User is not equal with User in params',
-      HttpStatus.UNPROCESSABLE_ENTITY,
     );
   }
 }

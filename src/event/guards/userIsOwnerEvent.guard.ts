@@ -1,8 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
+  ForbiddenException,
   Injectable,
 } from '@nestjs/common';
 import { EventService } from '../event.service';
@@ -21,6 +20,6 @@ export class UserIsOwnerEventGuard implements CanActivate {
 
     if (currentUserId === currentEvent.userId) return true;
 
-    throw new HttpException('Forbidden resource!', HttpStatus.FORBIDDEN);
+    throw new ForbiddenException('Forbidden resource!');
   }
 }

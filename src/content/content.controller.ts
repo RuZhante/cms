@@ -8,6 +8,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController, CrudRequestInterceptor } from '@nestjsx/crud';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AwsService } from 'src/aws/aws.service';
 import { ContentEntity } from './content.entity';
 import { ContentService } from './content.service';
 import { ContentParamsDto } from './dto/contentParams.dto';
@@ -52,7 +53,10 @@ import { UserIsOwnerContentGuard } from './guards/userIsOwnerContent.guard';
 @UseGuards(JwtAuthGuard)
 @Controller('users/:userId/contents')
 export class ContentController implements CrudController<ContentEntity> {
-  constructor(public service: ContentService) {}
+  constructor(
+    public service: ContentService,
+    private readonly awsService: AwsService,
+  ) {}
 
   @UseInterceptors(CrudRequestInterceptor)
   @Post('by-params')
@@ -68,6 +72,6 @@ export class ContentController implements CrudController<ContentEntity> {
 
   @Post('get-url')
   async getUrl(@Body() fileInfo: FileInfoDto) {
-    return await this.service.uploadPublicContent(fileInfo);
+    return await this.awsService.uploadPublicContent(fileInfo);
   }
 }

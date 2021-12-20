@@ -1,8 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
+  ForbiddenException,
   Injectable,
 } from '@nestjs/common';
 import { ScreenService } from '../screen.service';
@@ -21,6 +20,6 @@ export class UserIsOwnerScreenGuard implements CanActivate {
 
     if (currentUserId === currentScreen.userId) return true;
 
-    throw new HttpException('Forbidden resource!', HttpStatus.FORBIDDEN);
+    throw new ForbiddenException('Forbidden resource!');
   }
 }
