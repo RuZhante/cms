@@ -1,7 +1,7 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserCreateEventGuard } from 'src/event/guards/userCreateEvent.guard';
 import { UserCreateEventScreenGuard } from 'src/screen/guards/userCreateEvent-Screen.guard';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';

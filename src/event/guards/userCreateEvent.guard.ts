@@ -11,8 +11,6 @@ export class UserCreateEventGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
 
-    // console.log(request);
-
     const userInParamsId = request.params.userId;
     const currentUserId = request.user.id;
 

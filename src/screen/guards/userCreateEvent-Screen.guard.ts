@@ -14,8 +14,6 @@ export class UserCreateEventScreenGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    // console.log(request);
-
     const paramsEventId = request.params.eventId;
     const paramsUserId = request.params.userId;
     const userEvent = await this.eventService.findOne(paramsEventId);

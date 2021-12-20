@@ -14,9 +14,6 @@ export class UserCreateEventScreenPlaylistGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    // console.log(request);
-
-    // const paramsEventId = Number(request.params.eventId);
     const paramsScreenId = request.params.screenId;
     const userScreen = await this.screenService.findOne(paramsScreenId);
 

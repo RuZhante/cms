@@ -5,7 +5,4 @@ export class CreateEventDto {
   @ApiProperty()
   @IsNotEmpty()
   readonly title: string;
-
-  // @IsNotEmpty()
-  // userId: number;
 }

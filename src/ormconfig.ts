@@ -12,7 +12,7 @@ const ormconfig: ConnectionOptions = {
   migrations: [__dirname + '/migration/**/*{.js,.ts}'],
   logging: true,
   cli: {
-    migrationsDir: 'src/migration',
+    migrationsDir: 'src/database/migration',
   },
 };
 

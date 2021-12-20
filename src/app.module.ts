@@ -5,6 +5,7 @@ import ormconfig from './ormconfig';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AppController } from './app.controller';
     TypeOrmModule.forRoot(ormconfig),
     AuthModule,
     UserModule,
+    { module: AwsModule, global: true },
   ],
   controllers: [AppController],
 })

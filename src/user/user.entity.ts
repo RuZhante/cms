@@ -1,12 +1,4 @@
-import {
-  BeforeInsert,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { hash } from 'bcrypt';
+import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { EventEntity } from 'src/event/event.entity';
 import { ScreenEntity } from 'src/screen/screen.entity';
@@ -18,19 +10,6 @@ export class UserEntity {
   @ApiProperty()
   @PrimaryColumn('varchar')
   id: string;
-
-  // @ApiProperty()
-  // @Column({ nullable: true })
-  // email: string;
-
-  // @ApiProperty({ nullable: true })
-  // @Column()
-  // password: string;
-
-  // @BeforeInsert()
-  // async hashPassword() {
-  //   this.password = await hash(this.password, 10);
-  // }
 
   @OneToMany(() => EventEntity, (event) => event.user)
   events: EventEntity[];

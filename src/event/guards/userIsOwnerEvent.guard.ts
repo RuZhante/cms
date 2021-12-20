@@ -14,8 +14,6 @@ export class UserIsOwnerEventGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    // console.log(request);
-
     const eventId = request.params.id;
     const currentUserId = request.user.id;
 

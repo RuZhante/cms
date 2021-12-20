@@ -8,7 +8,7 @@ import { UserIsOwnerScreenGuard } from './guards/userIsOwnerScreen.guard';
 import { ScreenEntity } from './screen.entity';
 import { ScreenService } from './screen.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Crud({
   model: {

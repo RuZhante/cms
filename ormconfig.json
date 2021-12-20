@@ -7,10 +7,10 @@
   "database": "cms",
   "entities": ["src/**/*.entity.ts"],
   "synchronize": false,
-  "migrations": ["src/migration/**/*.ts"],
+  "migrations": ["src/database/migration/**/*.ts"],
   "seeds": ["src/database/seeds/**/*.seed.ts"],
   "factories": ["src/database/factories/**/*.factory.ts"],
   "cli": {
-    "migrationsDir": "src/migration"
+    "migrationsDir": "src/database/migration"
   }
 }
